@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B817FCA8283D4EBF00237960 /* level1.txt in Resources */ = {isa = PBXBuildFile; fileRef = B817FCA7283D4EBF00237960 /* level1.txt */; };
+		B8CE15B328450EA00062A23E /* level2.txt in Resources */ = {isa = PBXBuildFile; fileRef = B8CE15B228450EA00062A23E /* level2.txt */; };
 		B8FCA367282DB1B40036DE83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FCA366282DB1B40036DE83 /* AppDelegate.swift */; };
 		B8FCA369282DB1B40036DE83 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FCA368282DB1B40036DE83 /* SceneDelegate.swift */; };
 		B8FCA36B282DB1B40036DE83 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8FCA36A282DB1B40036DE83 /* ViewController.swift */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		B817FCA7283D4EBF00237960 /* level1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level1.txt; sourceTree = "<group>"; };
+		B8CE15B228450EA00062A23E /* level2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level2.txt; sourceTree = "<group>"; };
 		B8FCA363282DB1B40036DE83 /* Project8.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project8.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8FCA366282DB1B40036DE83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B8FCA368282DB1B40036DE83 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				B8FCA371282DB1B60036DE83 /* LaunchScreen.storyboard */,
 				B8FCA374282DB1B60036DE83 /* Info.plist */,
 				B817FCA7283D4EBF00237960 /* level1.txt */,
+				B8CE15B228450EA00062A23E /* level2.txt */,
 			);
 			path = Project8;
 			sourceTree = "<group>";
@@ -128,6 +131,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8CE15B328450EA00062A23E /* level2.txt in Resources */,
 				B8FCA373282DB1B60036DE83 /* LaunchScreen.storyboard in Resources */,
 				B817FCA8283D4EBF00237960 /* level1.txt in Resources */,
 				B8FCA370282DB1B60036DE83 /* Assets.xcassets in Resources */,
