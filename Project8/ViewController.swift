@@ -58,6 +58,8 @@ class ViewController: UIViewController {
         
         let buttonsView = UIView()
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
+        buttonsView.layer.borderWidth = 1
+        buttonsView.layer.borderColor = UIColor.lightGray.cgColor
         view.addSubview(buttonsView)
         
         NSLayoutConstraint.activate([
@@ -124,6 +126,7 @@ class ViewController: UIViewController {
             scoreLabel.text = "Score: \(score)"
         }
     }
+    var groundScore = 0
     var level = 1
     
     func loadLevel() {
@@ -196,12 +199,25 @@ class ViewController: UIViewController {
             
             currentAnswer.text = ""
             score += 1
+            groundScore += 1
             
-            if score % 7 == 0 {
+            /* if score % 7 == 0 {
+                let alertController = UIAlertController(title: "Good job!", message: "Do you wish to proceed to the next level?", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
+                present(alertController, animated: true)
+            } */
+            
+            if groundScore % 7 == 0 {
                 let alertController = UIAlertController(title: "Good job!", message: "Do you wish to proceed to the next level?", preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
                 present(alertController, animated: true)
             }
+        } else {
+            let alertController = UIAlertController(title: "Wrong!", message: "There is no such word, please find another one.", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alertController, animated: true)
+            
+            score -= 1
         }
     }
     
