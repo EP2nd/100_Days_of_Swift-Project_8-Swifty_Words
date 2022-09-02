@@ -187,7 +187,10 @@ class ViewController: UIViewController {
         guard let buttonTitle = sender.titleLabel?.text else { return }
         currentAnswer.text = currentAnswer.text?.appending(buttonTitle)
         activatedButtons.append(sender)
-        sender.isHidden = true
+        //sender.isHidden = true
+        
+        //Project_15-Challenge_1:
+        sender.alpha = 0.1
     }
     
     @objc func submitTapped(_ sender: UIButton) {
