@@ -1,14 +1,35 @@
+//
+//  ViewController.swift
+//  Project8
+//
+//  Created by Edwin Przeźwiecki Jr. on 12/05/2022.
+//
+
 import UIKit
 
 class ViewController: UIViewController {
 
+    var letterButtons = [UIButton]()
+    var activatedButtons = [UIButton]()
+    var solutions = [String]()
+    
+    var currentAnswer: UITextField!
+    
     var cluesLabel: UILabel!
     var answersLabel: UILabel!
-    var currentAnswer: UITextField!
     var scoreLabel: UILabel!
-    var letterButtons = [UIButton]()
+    
+    var score = 0 {
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
+    /// Challenge 3:
+    var groundScore = 0
+    var level = 1
     
     override func viewDidLoad() {
+        
         view = UIView()
         view.backgroundColor = .white
         //view.overrideUserInterfaceStyle = .dark
@@ -58,6 +79,7 @@ class ViewController: UIViewController {
         
         let buttonsView = UIView()
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
+        /// Challenge 1:
         buttonsView.layer.borderWidth = 1
         buttonsView.layer.borderColor = UIColor.lightGray.cgColor
         view.addSubview(buttonsView)
@@ -100,11 +122,12 @@ class ViewController: UIViewController {
         for row in 0..<4 {
             for col in 0..<5 {
                 let letterButton = UIButton(type: .system)
-                letterButton.titleLabel?.font = UIFont.systemFont(ofSize: 36)
                 
+                letterButton.titleLabel?.font = UIFont.systemFont(ofSize: 36)
                 letterButton.setTitle("nul", for: .normal)
                 
                 let frame = CGRect(x: col * width, y: row * height, width: width, height: height)
+                
                 letterButton.frame = frame
                 
                 buttonsView.addSubview(letterButton)
@@ -114,29 +137,20 @@ class ViewController: UIViewController {
                 letterButton.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
             }
         }
-        
+        /// Project 9, challenge 2:
         //loadLevel()
         performSelector(inBackground: #selector(loadLevel), with: nil)
     }
     
-    var activatedButtons = [UIButton]()
-    var solutions = [String]()
-    
-    var score = 0 {
-        didSet {
-            scoreLabel.text = "Score: \(score)"
-        }
-    }
-    var groundScore = 0
-    var level = 1
-    
     @objc func loadLevel() {
+        
         var clueString = ""
         var solutionString = ""
         var letterBits = [String]()
         
         if let levelFileURL = Bundle.main.url(forResource: "level\(level)", withExtension: "txt") {
             if let levelContents = try? String(contentsOf: levelFileURL) {
+                
                 var lines = levelContents.components(separatedBy: "\n")
                 lines.shuffle()
                 
@@ -148,16 +162,20 @@ class ViewController: UIViewController {
                     clueString += "\(index + 1). \(clue)\n"
                     
                     let solutionWord = answer.replacingOccurrences(of: "|", with: "")
+                    
                     solutionString += "\(solutionWord.count) letters\n"
+                    
                     solutions.append(solutionWord)
                     
                     let bits = answer.components(separatedBy: "|")
+                    
                     letterBits += bits
                 }
             }
         }
-        
+        /// Project 9, challenge 2:
         DispatchQueue.main.async {
+            
             self.cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
             self.answersLabel.text = solutionString.trimmingCharacters(in: .whitespacesAndNewlines)
         
@@ -171,10 +189,12 @@ class ViewController: UIViewController {
         }
     }
     
+    /// Challenge 3:
     func levelUp(action: UIAlertAction) {
         level += 1
         solutions.removeAll(keepingCapacity: true)
         
+        /// Project 9, challenge 2:
         //loadLevel()
         performSelector(inBackground: #selector(loadLevel), with: nil)
         
@@ -184,50 +204,64 @@ class ViewController: UIViewController {
     }
     
     @objc func letterTapped(_ sender: UIButton) {
+        
         guard let buttonTitle = sender.titleLabel?.text else { return }
+        
         currentAnswer.text = currentAnswer.text?.appending(buttonTitle)
         activatedButtons.append(sender)
         //sender.isHidden = true
         
-        //Project_15-Challenge_1:
+        /// Project 15, challenge 1:
         sender.alpha = 0.1
     }
     
     @objc func submitTapped(_ sender: UIButton) {
+        
         guard let answerText = currentAnswer.text else { return }
         
         if let solutionPosition = solutions.firstIndex(of: answerText) {
+            
             activatedButtons.removeAll()
             
             var splitAnswers = answersLabel.text?.components(separatedBy: "\n")
             splitAnswers?[solutionPosition] = answerText
-            answersLabel.text = splitAnswers?.joined(separator: "\n")
             
+            answersLabel.text = splitAnswers?.joined(separator: "\n")
             currentAnswer.text = ""
+            
+            /// Challenge 3:
             score += 1
+            
+            /// Challenge 3:
             groundScore += 1
             
             /* if score % 7 == 0 {
-                let alertController = UIAlertController(title: "Good job!", message: "Do you wish to proceed to the next level?", preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
-                present(alertController, animated: true)
-            } */
+             let alertController = UIAlertController(title: "Good job!", message: "Do you wish to proceed to the next level?", preferredStyle: .alert)
+             alertController.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
+             present(alertController, animated: true)
+             } */
             
             if groundScore % 7 == 0 {
+                
                 let alertController = UIAlertController(title: "Good job!", message: "Do you wish to proceed to the next level?", preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
+                
                 present(alertController, animated: true)
             }
+        /// Challenge 2:
         } else {
             let alertController = UIAlertController(title: "Wrong!", message: "There is no such word, please find another one.", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "OK", style: .default))
+            
             present(alertController, animated: true)
             
+            /// Challenge 3:
             score -= 1
         }
     }
     
     @objc func clearTapped(_ sender: UIButton) {
+        
         currentAnswer.text = ""
         
         for button in activatedButtons {
